@@ -94,7 +94,27 @@ while True:
     
     elif act == '4':
         id_note = input("Введите номер заметки которую хотите удалить: ")
-
+        flag = 0
+        notes = []
+        with open('task_note/note.csv', 'r', newline='') as file:
+            reader = csv.reader(file, delimiter =';')
+            id_new = 0
+            for row in reader:
+                if id_note != row[0]:
+                    id_new = id_new + 1
+                    row[0] = id_new
+                    notes.append(row)
+                else:
+                    flag = 1
+            file.close()
+        if flag == 0:
+            print("Нет заметки с таким номером.")
+        else:
+            with open('task_note/note.csv', 'w', newline='') as file:
+                writer = csv.writer(file, delimiter =';') 
+                for note in notes:
+                    writer.writerow(note)
+                file.close()
         act = input("Введите номер действия, которое хотите совершить: ")
    
     elif act == '5':
