@@ -67,7 +67,29 @@ while True:
     
     elif act == '3':
         id_note = input("Введите номер заметки которую хотите изменить: ")
-
+        flag = 0
+        notes = []
+        with open('task_note/note.csv', 'r', newline='') as file:
+            reader = csv.reader(file, delimiter =';')
+            for row in reader:
+                notes.append(row)
+            file.close()
+        for note in notes:
+            if id_note == note[0]:
+                print("Старый заголовок: " + note[1])
+                note[1] = input("Новый заголовок: ")
+                print("Старое содержание: " + note[2])
+                note[2] = input("Новое содержание: ")
+                note[3] = date.today()
+                flag = 1
+        if flag == 0:
+            print("Нет заметки с таким номером.")
+        else:
+            with open('task_note/note.csv', 'w', newline='') as file:
+                writer = csv.writer(file, delimiter =';') 
+                for note in notes:
+                    writer.writerow(note)
+                file.close()
         act = input("Введите номер действия, которое хотите совершить: ")
     
     elif act == '4':
