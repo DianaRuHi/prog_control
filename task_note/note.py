@@ -50,7 +50,7 @@ while True:
         act = input("Введите номер действия, которое хотите совершить: ")
     
     elif act == '2':
-        id_note = input("Введите номер заметки содержимое которой хотите увидеть: ")
+        id_note = input("Введите номер заметки, содержимое которой хотите увидеть: ")
         flag = 0
         with open('task_note/note.csv', 'r', newline='',) as file:
             reader = csv.reader(file, delimiter =';')
@@ -66,7 +66,7 @@ while True:
         act = input("Введите номер действия, которое хотите совершить: ")
     
     elif act == '3':
-        id_note = input("Введите номер заметки которую хотите изменить: ")
+        id_note = input("Введите номер заметки, которую хотите изменить: ")
         flag = 0
         notes = []
         with open('task_note/note.csv', 'r', newline='') as file:
@@ -93,7 +93,7 @@ while True:
         act = input("Введите номер действия, которое хотите совершить: ")
     
     elif act == '4':
-        id_note = input("Введите номер заметки которую хотите удалить: ")
+        id_note = input("Введите номер заметки, которую хотите удалить: ")
         flag = 0
         notes = []
         with open('task_note/note.csv', 'r', newline='') as file:
