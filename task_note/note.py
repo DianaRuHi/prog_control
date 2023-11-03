@@ -17,6 +17,7 @@
 
 import csv
 from datetime import date
+from datetime import datetime
 
 
 print ("Это програма по работе с заметками. В ней доступны следующие действия:")
@@ -50,14 +51,18 @@ while True:
     
     elif act == '2':
         id_note = input("Введите номер заметки содержимое которой хотите увидеть: ")
-        with open('task_note/note.csv', 'r', newline='') as file:
+        flag = 0
+        with open('task_note/note.csv', 'r', newline='',) as file:
             reader = csv.reader(file, delimiter =';')
             for row in reader:
                 if id_note == row[0]:
+                    flag = 1
                     print("Заголовок: ", row[1])
                     print("Содержание: ", row[2])
                     print("Дата создания: ", row[3])
             file.close()
+        if flag == 0:
+            print("Нет заметки с таким номером.")
         act = input("Введите номер действия, которое хотите совершить: ")
     
     elif act == '3':
@@ -72,13 +77,37 @@ while True:
    
     elif act == '5':
         print("Список всех заметок: ")
-
+        with open('task_note/note.csv', 'r', newline='') as file:
+            reader = csv.reader(file, delimiter =';')
+            for row in reader:
+                print("id: " + row[0] + ". Заголовок: " + row[1])
+            file.close()
         act = input("Введите номер действия, которое хотите совершить: ")
     
     elif act == '6':
-        date_from = input("Введите дату в формате год-месяц-день начиная с которой хотете увидеть заметки: ")
-        date_to = input("Введите дату в формате год-месяц-день до которой хотете увидеть заметки: ")
-
+        flag = 1
+        while flag:
+            date_from = input("Введите дату в формате год-месяц-день начиная с которой хотете увидеть заметки: ")
+            try:
+                date_f = datetime.strptime(date_from, '%Y-%m-%d')
+                flag = 0
+            except:
+                print("Неверный формат даты.")
+        flag = 1
+        while flag:
+            date_to = input("Введите дату в формате год-месяц-день до которой хотете увидеть заметки: ")
+            try:
+                date_t = datetime.strptime(date_to, '%Y-%m-%d')
+                flag = 0
+            except:
+                print("Неверный формат даты.")
+        print("Заметки созданные между " + date_from + " и " + date_to + " : ")
+        with open('task_note/note.csv', 'r', newline='') as file:
+            reader = csv.reader(file, delimiter =';')
+            for row in reader:
+                date_note = datetime.strptime(row[3], "%Y-%m-%d")
+                if  date_f <= date_note <= date_t:
+                    print("id: " + row[0] + ". Заголовок: " + row[1] + ". Дата: " + row[3])
         act = input("Введите номер действия, которое хотите совершить: ")
     
     elif act == '7':
@@ -86,6 +115,13 @@ while True:
         break
     else:
         print("Неверныый ввод, попробуйте еще раз.")
+        print ("1 - Создать заметку")
+        print ("2 - Показать содержимое заметки")
+        print ("3 - Изменить заметку")
+        print ("4 - Удалить заметку")
+        print ("5 - Вывести список заметок")
+        print ("6 - Сделать выборку заметок по дате")
+        print ("7 - Завершить программу")       
         act = input("Введите номер действия, которое хотите совершить: ")
         
 
